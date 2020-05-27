@@ -27,6 +27,9 @@ import os  # needed to grab verbosity as environment variable
 from . import Globals, rpath
 
 
+LOGFILE_ENCODING = 'utf-8'
+
+
 class LoggerError(Exception):
     pass
 
@@ -147,7 +150,7 @@ class Logger:
             if self.log_file_local:
                 tmpstr = self.format(message, self.verbosity)
                 if type(tmpstr) == str:  # transform string in bytes
-                    tmpstr = tmpstr.encode('utf-8', 'backslashreplace')
+                    tmpstr = tmpstr.encode(LOGFILE_ENCODING, 'backslashreplace')
                 self.logfp.write(tmpstr)
                 self.logfp.flush()
             else:
@@ -283,14 +286,12 @@ class ErrorLog:
                 error_type, rp, exc)
         logstr = cls.get_log_string(error_type, rp, exc)
         Log(logstr, 2)
-        if isinstance(logstr, bytes):
-            logstr = logstr.decode('utf-8')
         if Globals.null_separator:
             logstr += "\0"
         else:
             logstr = re.sub("\n", " ", logstr)
             logstr += "\n"
-        cls._log_fileobj.write(logstr)
+        cls._log_fileobj.write(logstr.encode(LOGFILE_ENCODING, 'backslashreplace'))
 
     @classmethod
     def get_indexpath(cls, obj):
