@@ -101,7 +101,7 @@ jobs:
       before_install:
         - git clone https://github.com/pyenv-win/pyenv-win.git $HOME/.pyenv
         - export PATH="$HOME/.pyenv/pyenv-win/bin:$HOME/.pyenv/pyenv-win/shims:$PATH"
-        - export pyver=3.7.5
+        - export pyver=3.7.7
         - export pyverbrief=${pyver:0:3}
         - pyenv install --list
         - pyenv install -q $pyver || pyenv rehash
@@ -112,7 +112,7 @@ jobs:
       install:
         - pip install --upgrade tox pywin32 setuptools-scm PyInstaller wheel
         - pyenv rehash
-        - git clone -b v2.2.1 https://github.com/librsync/librsync.git $HOME/.librsync
+        - git clone -b v2.3.1 https://github.com/librsync/librsync.git $HOME/.librsync
         - export LIBRSYNC_DIR=$HOME/librsync
         - pushd $HOME/.librsync
         - cmake -DCMAKE_INSTALL_PREFIX=$LIBRSYNC_DIR -A Win32 -DBUILD_SHARED_LIBS=OFF .
